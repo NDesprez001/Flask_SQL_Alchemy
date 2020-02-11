@@ -10,7 +10,13 @@ def mk_dict():
     'city': d['city'],
     'state': d['state'],
     'longitude': d['loc'][0],
-    'latitude': d['loc'][1]
+    'latitude': d['loc'][1],
+    'population': d['pop']
   }
   return new_dict
+
+
+zipcode_data = mk_dict()
+with open('zipcodes.json', 'w') as jfile:
+    json.dump(zipcode_data, jfile)
 
