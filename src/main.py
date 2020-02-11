@@ -8,7 +8,9 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from models import db
+import seeds
 #from models import Person
+
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -36,6 +38,14 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+@app.route('/popultate_database', methods=['GET'])
+def pop_data():
+    return seeds.run()
+
+@app.route('/zip_info', methods=['GET'])
+def zip_info():
+    pass
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
