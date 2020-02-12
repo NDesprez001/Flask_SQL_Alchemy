@@ -9,6 +9,7 @@ from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from models import db
 import seeds
+import db_add_zip
 #from models import Person
 
 
@@ -43,9 +44,9 @@ def handle_hello():
 def pop_data():
     return seeds.run()
 
-@app.route('/zip_info', methods=['GET'])
+@app.route('/zip_info', methods=['POST'])
 def zip_info():
-    pass
+    return db_add_zip.make_table()
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
