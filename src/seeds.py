@@ -7,6 +7,7 @@ def run():
         username = 'FiteBak',
         password = 'Protecc123',
         email = 'Conekt33@gmail.com'
+        
     ))
     db.session.add( Users(
         first_name = 'Tom',
