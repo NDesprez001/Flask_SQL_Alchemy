@@ -1,20 +1,42 @@
-from models import db, Users
+from models import db, Users, Jobs
 
 def run():
-    db.session.add( Users(
+
+    Jobs.query.delete()
+    Users.query.delete()
+
+    # db.session.execute("ALTER SEQUENCE jobs_id_seq RESTART")
+    # db.session.execute("ALTER SEQUENCE users_id_seq RESTART")
+
+    jak = Users(
         first_name = 'Jak',
         last_name = 'Atak',
         username = 'FiteBak',
         password = 'Protecc123',
         email = 'Conekt33@gmail.com'
         
+    )
+    db.session.add(jak)
+    
+    db.session.add(Jobs(
+        job_name = "Pro Sleeping",
+        job_place = "Insomni.co",
+        job_pay = "$80 per hour",
+        user = jak
     ))
-    db.session.add( Users(
+    Tom = Users(
         first_name = 'Tom',
         last_name = 'Bradley',
         username = 'NotBrady',
         password = 'tom355',
         email = 'T.Bradley@gmail.com'
+    )
+    db.session.add(Tom)
+    db.session.add(Jobs(
+        job_name = "Food Runner",
+        job_place = "BigEats Resturaunt",
+        job_pay = "$30 per hour",
+        user = Tom
     ))
     db.session.add( Users(
         first_name = 'Micheal',

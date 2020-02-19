@@ -49,24 +49,24 @@ def pop_data():
 def zip_info():
     return db_add_zip.make_table()
 
-@app.route('/users/<id>', methods=['POST', 'GET'])
-def get_users_id(id):
+@app.route('/users/<username>', methods=['POST'])
+def get_users_id(username):
     # user = Users.query.get(1)
     # user_dict = user.serialize()
-    if not id.isnumeric():
-        return 'ID must be numeric'
+    # if not id.isnumeric():
+    #     return 'ID must be numeric'
     
-    user = Users.query.get(int(id))
-        
+    user = Users.query.filter_by(username = username).first()
+    
     if user is None:
-        return 'User not found'
+        return 'User not found', 404
     
     return jsonify(user.serialize())
 
-@app.route('/user', methods = ['POST', 'GET'])
-def get_user():
-    users = Users.query.filter(Users.username.ilike('%a%'))
-    return (jsonify([(x.serialize()) for x in users]))
+# @app.route('/user', methods = ['POST', 'GET'])
+# def get_user():
+#     users = Users.query.filter(Users.username.ilike('%a%'))
+#     return (jsonify([(x.serialize()) for x in users]))
 
 # @app.route('/numbers', methods = ['POST', 'GET'])
 # def odd():
@@ -102,6 +102,23 @@ def ex_2(id_2):
         return 'Job not found'
     
     return jsonify(j_info.serialize())
+@app.route('/user_update', methods = ['PUT'])
+def changes():
+    json = request.get_json()
+    user = Users.query.filter_by(
+        email = json["email"]
+    ).first()
+    
+    if user is None:
+        return 'User not found'
+    
+    user.username = json["username"]
+    user.password = json["password"]
+    db.session.commit()
+    return 'User successfully updated'
+@app.route('/F_key_test', methods = ['POST'])
+def testing123():
+    return jsonify(Users.query.get(1).serialize())
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
